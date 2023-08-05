@@ -25,7 +25,7 @@ class GameDetailView(RetrieveUpdateAPIView):
     
     def get_queryset(self):
         pk = self.kwargs.get("pk")
-        return Game.objects.filter(pk=pk) 
+        return Game.objects.prefetch_related("comments").filter(pk=pk) 
     
     
 class TopGamesListView(ListAPIView):
@@ -45,3 +45,4 @@ class CategoryListView(ListAPIView):
         genre = self.kwargs.get("genre")
         return Game.objects.filter(genre__name__icontains=genre)
 
+    

@@ -63,6 +63,18 @@ class Game(models.Model):
         return f"{self.title} - {self.release_date} "
     
     
+    def allow_comment(self, user):
+        user_comments = self.comments.filter(
+            user=user,
+        )
+        current_count = user_comments.count()
+        if current_count < 3:
+            return True
+        else:
+            return False
+
+    
+    
     
     
 class HowLongToBeat(models.Model):
@@ -80,15 +92,3 @@ class HowLongToBeat(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="hltb")
     
     
-# class Rate(models.Model):
-#     game = models.ForeignKey(Game, related_name="rates", on_delete=models.CASCADE, verbose_name=_("Game"))
-#     user = models.ForeignKey(User, related_name="rates", on_delete=models.CASCADE, verbose_name=_("User"))
-#     rate = models.PositiveIntegerField(_("Rate"), validators=[])
-    
-    
-    
-# class Comment(models.Model):
-#     game = models.ForeignKey(Game, related_name="comments", on_delete=models.CASCADE, verbose_name=_("Game"))
-#     user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE, verbose_name=_("User"))
-#     content = models.TextField(_("Content"))
-#     time = models.DateField(auto_now_add=True)

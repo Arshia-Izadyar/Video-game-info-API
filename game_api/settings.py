@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     # local
     "accounts.apps.AccountsConfig",
     "games.apps.GamesConfig",
-    
+    "review.apps.ReviewConfig",
     # 3rdparty
     'rest_framework',
     'django_filters',
