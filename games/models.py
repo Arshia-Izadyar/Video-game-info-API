@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from lib.validator import score_validator, link_validator
 
 
 User = get_user_model()
@@ -48,11 +49,11 @@ class Company(models.Model):
 
 class Game(models.Model):
     title = models.CharField(_("Title"), max_length=200, unique=False)
-    slug = models.SlugField(_("Game Slug"), max_length=250, unique=True, validators=[])
+    slug = models.SlugField(_("Game Slug"), max_length=250, unique=True)
     release_date = models.DateField(_("Release Date"))
-    score = models.PositiveSmallIntegerField(_("Score"), validators=[])
+    score = models.PositiveSmallIntegerField(_("Score"), validators=[score_validator])
     description = models.TextField(_("Description"), null=True, blank=True)
-    metacritic_link = models.URLField(_("Metacritic"), validators=[])
+    metacritic_link = models.URLField(_("Metacritic"), validators=[link_validator])
     must_paly = models.BooleanField(_("Must Play") ,default=False)
     image = models.ImageField(_("Images"), upload_to="images/", null=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="games", verbose_name=_("Genre"))
