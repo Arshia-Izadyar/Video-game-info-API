@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -18,3 +18,12 @@ class GamesListView(ListAPIView):
     search_fields = ['title']
     ordering_fields = ["score", "release_date"]
 
+class GameDetailView(RetrieveUpdateAPIView):
+    serializer_class = GamesSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+        return Game.objects.filter(pk=pk) 
+    
+    
