@@ -8,3 +8,9 @@ def score_validator(score):
 def link_validator(link:str):
     if not link.startswith("https://www.metacritic.com"):
         raise ValidationError("invalid link ! ")
+
+
+
+def rate_validator(rate):
+    if rate > 10 or rate < 10:
+        raise ValidationError("rate must be 0-10s")
