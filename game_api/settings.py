@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     # local
     "accounts.apps.AccountsConfig",
     "games.apps.GamesConfig",
+    
+    # 3rdparty
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
