@@ -81,7 +81,9 @@ class HowLongToBeatSerializer(serializers.ModelSerializer):
 
 class BookMarkSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    game = GamesSerializer(read_only=True)
     class Meta:
         model = BookMark
-        fields = ("user", )
+        fields = ("user", "game", "created_time")
+        read_only_fields = ("game", "created_time")
         

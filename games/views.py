@@ -1,13 +1,12 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import filters
-from rest_framework import status
+from rest_framework import filters, status
 from rest_framework.response import Response
+
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
-
 
 from .models import Game, HowLongToBeat, BookMark
 from .serializers import GamesSerializer, HowLongToBeatSerializer, BookMarkSerializer
@@ -64,7 +63,7 @@ class HowLongToBeatView(CreateAPIView):
         serializer.save(user=self.request.user, game=game)
         return Response({"Status": "Created"}, status=status.HTTP_201_CREATED)
 
-class BookMark(APIView):
+class AddBookMarkView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request, pk):
@@ -75,4 +74,12 @@ class BookMark(APIView):
             return Response({"Status":"Done"}, status=status.HTTP_202_ACCEPTED)
         else:
             return Response({"Status":{"Error":serializer.errors}})
-        
+
+
+class BookMarkListView(ListAPIView):
+    serializer_class = BookMarkSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        user = self.request.user
+        return BookMark.objects.filter(user__username=user.username)
