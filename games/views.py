@@ -16,7 +16,6 @@ from .paginators import StandardPagination
 
 class GamesListView(ListAPIView):
     serializer_class = GamesSerializer
-    permission_classes = [IsAuthenticated]
     queryset = Game.objects.all()
     pagination_class = StandardPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -25,9 +24,10 @@ class GamesListView(ListAPIView):
     ordering_fields = ["score", "release_date"]
 
 
+
 class GameDetailView(RetrieveUpdateAPIView):
     serializer_class = GamesSerializer
-    permission_classes = [IsAuthenticated]
+
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
