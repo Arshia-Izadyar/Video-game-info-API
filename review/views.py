@@ -9,7 +9,7 @@ from .models import Comment
 from .serializers import CommentSerializer, RateSerializer
 
 
-class Comment(APIView):
+class Comments(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, game_pk, comment_pk=None):
