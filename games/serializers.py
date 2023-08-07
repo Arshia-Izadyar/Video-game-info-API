@@ -14,14 +14,17 @@ class GamesSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         resp = super().to_representation(instance)
         request = self.context.get("request")
-        if not request.parser_context["kwargs"]:
-            resp.pop("description")
-            resp.pop("metacritic_link")
-            resp.pop("image")
-            resp.pop("score")
-            resp.pop("comments")
+        if request is not None:
+            if request.parser_context["kwargs"]:
+                resp.pop("description")
+                resp.pop("metacritic_link")
+                resp.pop("image")
+                resp.pop("score")
+                resp.pop("comments")
+                return resp
             return resp
-        return resp
+        else:
+            return resp
 
     def get_hltb_normal(self, obj):
         time = obj.hltb.filter(mode=2).aggregate(avg_time=Avg("time"))["avg_time"]
@@ -59,6 +62,7 @@ class GamesSerializer(serializers.ModelSerializer):
             "user_rate",
             "release_date",
             "score",
+            "slug",
             "hltb_normal",
             "hltb_hard",
             "hltb_full",

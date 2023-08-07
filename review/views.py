@@ -35,14 +35,17 @@ class Comments(APIView):
         if serializer.is_valid():
             game_obj = get_object_or_404(Game, pk=game_pk)
             user = request.user
-            parent_comment = None
-            if comment_pk is not None:
-                try:
-                    parent_comment = get_object_or_404(Comment, pk=comment_pk)
-                except Comment.DoesNotExist:
-                    return Response({"status": {"Error": "Parent Comment not Found"}}, status=status.HTTP_404_NOT_FOUND)
-            serializer.save(game=game_obj, user=user, parent=parent_comment)
-            return Response({"status": "Done"}, status=status.HTTP_201_CREATED)
+            if game_obj.allow_comment(user):
+                parent_comment = None
+                if comment_pk is not None:
+                    try:
+                        parent_comment = get_object_or_404(Comment, pk=comment_pk)
+                    except Comment.DoesNotExist:
+                        return Response({"status": {"Error": "Parent Comment not Found"}}, status=status.HTTP_404_NOT_FOUND)
+                serializer.save(game=game_obj, user=user, parent=parent_comment)
+                return Response({"status": "Done"}, status=status.HTTP_201_CREATED)
+            else:
+                return Response({"Status":{"Error":"only 3 comments can be posted for each game"}})
         else:
             return Response({"Status": {"Error": serializer.errors}}, status=status.HTTP_400_BAD_REQUEST)
 

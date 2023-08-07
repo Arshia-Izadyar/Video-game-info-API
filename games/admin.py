@@ -15,7 +15,7 @@ class PlatformAdmin(admin.ModelAdmin):
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-    list_display = ("title", "score", "genre", "platform")
+    list_display = ("id","title", "score", "genre", "platform", "slug")
     search_fields = ("title", "genre")
     list_filter = ("platform",)
 

@@ -8,10 +8,18 @@ from .views import (GamesListView,
                     TopGamesListView,
                     AddBookMarkView,
                     BookMarkListView,
+                    UpdateGameView,
+                    CreateGameView,
+                    DeleteGame,
                     )
 app_name = "game"
 
 urlpatterns = [
+    path("v1/create/", CreateGameView.as_view(), name="create"),
+    path("v1/update/<slug:s>/", UpdateGameView.as_view(), name="update"),
+    path("v1/delete/<slug:s>/", DeleteGame.as_view(), name="delete"),
+    
+    
     path("v1/list/", GamesListView.as_view(), name="list"),
     path("v1/detail/<int:pk>/", GameDetailView.as_view(), name="detail"),
     path("v1/category/<slug:genre>/", CategoryListView.as_view(), name="genre-list"),
