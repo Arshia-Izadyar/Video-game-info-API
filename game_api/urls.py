@@ -18,10 +18,16 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include, re_path
 from django.conf.urls.static import static
+from rest_framework.schemas import get_schema_view
+
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("game/", include("games.urls")),
     path("review/", include("review.urls")),
     path("account/", include("accounts.urls")),
+    path('schema/', get_schema_view()),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("docs/",SpectacularSwaggerView.as_view(template_name="swagger-ui.html", url_name="schema"),name="swagger-ui",),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
