@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Game, Genre, Platform, Company
+from .models import Game, Genre, Platform, Company, HowLongToBeat
 
 
 @admin.register(Genre)
@@ -26,3 +26,6 @@ class CompanyAdmin(admin.ModelAdmin):
     search_fields = ("name",)
     
     
+@admin.register(HowLongToBeat)
+class HowLongToBeatAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "time")

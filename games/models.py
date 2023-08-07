@@ -74,9 +74,6 @@ class Game(models.Model):
             return False
 
     
-    
-    
-    
 class HowLongToBeat(models.Model):
     FULL = 1
     STORY_N = 2
@@ -87,7 +84,7 @@ class HowLongToBeat(models.Model):
         (STORY_H, "HardStory"),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="hltb")
-    time = models.TimeField(_("Time"))
+    time = models.DurationField(_("Time"))
     mode = models.PositiveSmallIntegerField(choices=type, default=STORY_N)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="hltb")
     
