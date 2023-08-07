@@ -20,8 +20,7 @@ class Rate(models.Model):
 class Comment(models.Model):
     game = models.ForeignKey(Game, related_name="comments", on_delete=models.CASCADE, verbose_name=_("Game"))
     user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE, verbose_name=_("User"))
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, related_name="replies", null=True, blank=True)
     content = models.TextField(_("Content"))
     time = models.DateField(auto_now_add=True)
     
-    # class Meta:
-    #     unique_together = ["user", "game"]
