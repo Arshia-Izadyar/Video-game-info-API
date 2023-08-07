@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.db.models import Avg
-from .models import Game, HowLongToBeat
-from review.serializers import CommentSerializer
+from .models import Game, HowLongToBeat, BookMark
+from review.serializers import CommentSerializer, UserSerializer
 
 
 class GamesSerializer(serializers.ModelSerializer):
@@ -77,3 +77,11 @@ class HowLongToBeatSerializer(serializers.ModelSerializer):
     class Meta:
         model = HowLongToBeat
         fields = ("time", "mode")
+
+
+class BookMarkSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = BookMark
+        fields = ("user", )
+        

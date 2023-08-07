@@ -88,3 +88,9 @@ class HowLongToBeat(models.Model):
     time = models.DurationField(_("Time"))
     mode = models.PositiveSmallIntegerField(choices=type, default=STORY_N)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="hltb")
+
+
+class BookMark(models.Model):
+    game = models.ForeignKey(Game, related_name="bookmarks", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="bookmarks", on_delete=models.CASCADE)
+    created_time = models.DateField(auto_now_add=True)

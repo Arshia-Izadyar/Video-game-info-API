@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Game, Genre, Platform, Company, HowLongToBeat
+from .models import Game, Genre, Platform, Company, HowLongToBeat, BookMark
 
 
 @admin.register(Genre)
@@ -29,3 +29,9 @@ class CompanyAdmin(admin.ModelAdmin):
 @admin.register(HowLongToBeat)
 class HowLongToBeatAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "time")
+
+
+@admin.register(BookMark)
+class BookMarkAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "game")
+    
