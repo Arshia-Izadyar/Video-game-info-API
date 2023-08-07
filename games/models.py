@@ -54,7 +54,7 @@ class Game(models.Model):
     description = models.TextField(_("Description"), null=True, blank=True)
     metacritic_link = models.URLField(_("Metacritic"), validators=[link_validator])
     must_play = models.BooleanField(_("Must Play"), default=False)
-    image = models.ImageField(_("Images"), upload_to="images/", null=True)
+    image = models.ImageField(_("Images"), upload_to="images/", null=True, blank=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="games", verbose_name=_("Genre"))
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT, related_name="games", verbose_name=_("Platform"))
     company = models.ForeignKey(
@@ -94,3 +94,6 @@ class BookMark(models.Model):
     game = models.ForeignKey(Game, related_name="bookmarks", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="bookmarks", on_delete=models.CASCADE)
     created_time = models.DateField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ["user", "game"]
