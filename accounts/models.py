@@ -13,11 +13,11 @@ class User(AbstractUser):
         (CONSUMER, "Consumer"),
         (PROVIDER, "Provider"),
     )
-    
+
     email = models.EmailField(_("E-mail"), unique=True)
     phone_number = models.CharField(_("Phone number "), max_length=12, unique=True)
     is_admin = models.BooleanField(_("Admin status"), default=False)
-    
+
     score = models.PositiveIntegerField(_("User score"), default=0)
     user_type = models.PositiveSmallIntegerField(_("User type"), choices=user_type, default=CONSUMER)
 
@@ -40,7 +40,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
 
     def is_following(self, user):
         return self.followers.filter(pk=user.pk).exists()

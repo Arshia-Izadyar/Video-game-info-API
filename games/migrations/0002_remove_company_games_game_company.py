@@ -5,19 +5,24 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('games', '0001_initial'),
+        ("games", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='company',
-            name='games',
+            model_name="company",
+            name="games",
         ),
         migrations.AddField(
-            model_name='game',
-            name='company',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='games', to='games.company', verbose_name='Company'),
+            model_name="game",
+            name="company",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="games",
+                to="games.company",
+                verbose_name="Company",
+            ),
         ),
     ]

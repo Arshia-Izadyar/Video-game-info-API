@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "games.apps.GamesConfig",
     "review.apps.ReviewConfig",
     # 3rdparty
-    'rest_framework',
-    'django_filters',
+    "rest_framework",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -85,13 +85,13 @@ WSGI_APPLICATION = "game_api.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('POSTGRES_DB'),
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_HOST'),
-        'PORT': config('POSTGRES_PORT'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("POSTGRES_DB"),
+        "USER": config("POSTGRES_USER"),
+        "PASSWORD": config("POSTGRES_PASSWORD"),
+        "HOST": config("POSTGRES_HOST"),
+        "PORT": config("POSTGRES_PORT"),
     }
 }
 
@@ -131,8 +131,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = ((os.path.join(BASE_DIR, "static")),)
-
-
 
 
 MEDIA_URL = "/media/"

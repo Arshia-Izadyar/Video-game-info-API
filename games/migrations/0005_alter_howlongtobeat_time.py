@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('games', '0004_rename_must_paly_game_must_play_and_more'),
+        ("games", "0004_rename_must_paly_game_must_play_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='howlongtobeat',
-            name='time',
-            field=models.DurationField(verbose_name='Time'),
+            model_name="howlongtobeat",
+            name="time",
+            field=models.DurationField(verbose_name="Time"),
         ),
     ]

@@ -4,4 +4,4 @@ from .models import Comment
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("pk","user", "time")
+    list_display = ("pk", "user", "time")

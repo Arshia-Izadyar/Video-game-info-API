@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+
 # from allauth.account.forms import SignupForm
 from django.utils.translation import gettext as _
 
@@ -16,9 +17,6 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = UserChangeForm.Meta.fields
-
-
-
 
 
 # class MyCustomSignupForm(SignupForm):

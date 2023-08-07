@@ -6,17 +6,16 @@ from lib.validator import score_validator, link_validator
 
 User = get_user_model()
 
-    
+
 class Genre(models.Model):
     name = models.CharField(_("Name"), max_length=150)
     parent = models.ForeignKey("self", related_name="children", on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    
+
     def __str__(self):
         return self.name
-    
-    
-    
+
+
 class Platform(models.Model):
     PS = 1
     XBOX = 2
@@ -24,7 +23,7 @@ class Platform(models.Model):
     PC = 4
     SD = 5
     platforms = (
-        (PS,"playStation"),
+        (PS, "playStation"),
         (XBOX, "Xbox"),
         (NIN, "Nintendo"),
         (PC, "Pc"),
@@ -32,20 +31,20 @@ class Platform(models.Model):
     )
     name = models.PositiveSmallIntegerField(_("Name"), choices=platforms, default=PS)
     description = models.TextField(_("Description"), null=True, blank=True)
-    
+
     def __str__(self):
         return self.get_name_display()
-    
-    
+
+
 class Company(models.Model):
     name = models.CharField(_("Name"), max_length=150)
     slug = models.SlugField(_("Company slug"), unique=True, max_length=250)
     found_year = models.DateField(_("Year founded"), null=True)
     description = models.TextField(_("Description"), null=True, blank=True)
-    
+
     def __str__(self):
         return f"{self.name} - {self.found_year}"
-    
+
 
 class Game(models.Model):
     title = models.CharField(_("Title"), max_length=200, unique=False)
@@ -54,15 +53,17 @@ class Game(models.Model):
     score = models.PositiveSmallIntegerField(_("Score"), validators=[score_validator])
     description = models.TextField(_("Description"), null=True, blank=True)
     metacritic_link = models.URLField(_("Metacritic"), validators=[link_validator])
-    must_play = models.BooleanField(_("Must Play") ,default=False)
+    must_play = models.BooleanField(_("Must Play"), default=False)
     image = models.ImageField(_("Images"), upload_to="images/", null=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="games", verbose_name=_("Genre"))
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT, related_name="games", verbose_name=_("Platform"))
-    company = models.ForeignKey(Company, on_delete=models.PROTECT, related_name="games", verbose_name=_("Company"), null=True)
+    company = models.ForeignKey(
+        Company, on_delete=models.PROTECT, related_name="games", verbose_name=_("Company"), null=True
+    )
+
     def __str__(self):
         return f"{self.title} - {self.release_date} "
-    
-    
+
     def allow_comment(self, user):
         user_comments = self.comments.filter(
             user=user,
@@ -73,7 +74,7 @@ class Game(models.Model):
         else:
             return False
 
-    
+
 class HowLongToBeat(models.Model):
     FULL = 1
     STORY_N = 2
@@ -87,5 +88,3 @@ class HowLongToBeat(models.Model):
     time = models.DurationField(_("Time"))
     mode = models.PositiveSmallIntegerField(choices=type, default=STORY_N)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="hltb")
-    
-    

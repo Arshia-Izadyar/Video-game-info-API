@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,65 +14,111 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Game',
+            name="Game",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200, verbose_name='Title')),
-                ('slug', models.SlugField(max_length=250, unique=True, verbose_name='Game Slug')),
-                ('release_date', models.DateField(verbose_name='Release Date')),
-                ('score', models.PositiveSmallIntegerField(verbose_name='Score')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Description')),
-                ('metacritic_link', models.URLField(verbose_name='Metacritic')),
-                ('must_paly', models.BooleanField(default=False, verbose_name='Must Play')),
-                ('image', models.ImageField(upload_to='images/', verbose_name='Images')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=200, verbose_name="Title")),
+                ("slug", models.SlugField(max_length=250, unique=True, verbose_name="Game Slug")),
+                ("release_date", models.DateField(verbose_name="Release Date")),
+                ("score", models.PositiveSmallIntegerField(verbose_name="Score")),
+                ("description", models.TextField(blank=True, null=True, verbose_name="Description")),
+                ("metacritic_link", models.URLField(verbose_name="Metacritic")),
+                ("must_paly", models.BooleanField(default=False, verbose_name="Must Play")),
+                ("image", models.ImageField(upload_to="images/", verbose_name="Images")),
             ],
         ),
         migrations.CreateModel(
-            name='Platform',
+            name="Platform",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.PositiveSmallIntegerField(choices=[(1, 'playStation'), (2, 'Xbox'), (3, 'Nintendo'), (4, 'Pc'), (5, 'SteamDeck')], default=1, verbose_name='Name')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Description')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "name",
+                    models.PositiveSmallIntegerField(
+                        choices=[(1, "playStation"), (2, "Xbox"), (3, "Nintendo"), (4, "Pc"), (5, "SteamDeck")],
+                        default=1,
+                        verbose_name="Name",
+                    ),
+                ),
+                ("description", models.TextField(blank=True, null=True, verbose_name="Description")),
             ],
         ),
         migrations.CreateModel(
-            name='HowLongToBeat',
+            name="HowLongToBeat",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time', models.TimeField(verbose_name='Time')),
-                ('mode', models.PositiveSmallIntegerField(choices=[(1, 'FullComplete'), (2, 'NormalStory'), (3, 'HardStory')], default=2)),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='hltb', to='games.game')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='hltb', to=settings.AUTH_USER_MODEL)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("time", models.TimeField(verbose_name="Time")),
+                (
+                    "mode",
+                    models.PositiveSmallIntegerField(
+                        choices=[(1, "FullComplete"), (2, "NormalStory"), (3, "HardStory")], default=2
+                    ),
+                ),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="hltb", to="games.game"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="hltb", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Genre',
+            name="Genre",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=150, verbose_name='Name')),
-                ('description', models.TextField(blank=True, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='games.genre')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=150, verbose_name="Name")),
+                ("description", models.TextField(blank=True, null=True)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="children",
+                        to="games.genre",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='game',
-            name='genre',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='games', to='games.genre', verbose_name='Genre'),
+            model_name="game",
+            name="genre",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="games",
+                to="games.genre",
+                verbose_name="Genre",
+            ),
         ),
         migrations.AddField(
-            model_name='game',
-            name='platform',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='games', to='games.platform', verbose_name='Platform'),
+            model_name="game",
+            name="platform",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="games",
+                to="games.platform",
+                verbose_name="Platform",
+            ),
         ),
         migrations.CreateModel(
-            name='Company',
+            name="Company",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=150, verbose_name='Name')),
-                ('slug', models.SlugField(max_length=250, unique=True, verbose_name='Company slug')),
-                ('found_year', models.DateField(null=True, verbose_name='Year founded')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Description')),
-                ('games', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='companies', to='games.game')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=150, verbose_name="Name")),
+                ("slug", models.SlugField(max_length=250, unique=True, verbose_name="Company slug")),
+                ("found_year", models.DateField(null=True, verbose_name="Year founded")),
+                ("description", models.TextField(blank=True, null=True, verbose_name="Description")),
+                (
+                    "games",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="companies", to="games.game"
+                    ),
+                ),
             ],
         ),
     ]

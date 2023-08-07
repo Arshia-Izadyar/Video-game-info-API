@@ -14,16 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 class RateSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Rate
         fields = ("rate", "user")
-        
+
+
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Comment
         fields = ("content", "user")
-        
-
-        
-        

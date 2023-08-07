@@ -5,25 +5,24 @@ import lib.validator
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('games', '0003_alter_game_image'),
+        ("games", "0003_alter_game_image"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='game',
-            old_name='must_paly',
-            new_name='must_play',
+            model_name="game",
+            old_name="must_paly",
+            new_name="must_play",
         ),
         migrations.AlterField(
-            model_name='game',
-            name='metacritic_link',
-            field=models.URLField(validators=[lib.validator.link_validator], verbose_name='Metacritic'),
+            model_name="game",
+            name="metacritic_link",
+            field=models.URLField(validators=[lib.validator.link_validator], verbose_name="Metacritic"),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='score',
-            field=models.PositiveSmallIntegerField(validators=[lib.validator.score_validator], verbose_name='Score'),
+            model_name="game",
+            name="score",
+            field=models.PositiveSmallIntegerField(validators=[lib.validator.score_validator], verbose_name="Score"),
         ),
     ]
