@@ -2,9 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 from games.models import Game
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, RateSerializer
 
 
 
@@ -22,10 +23,21 @@ class AddComment(APIView):
             serializer = CommentSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save(user=user, game=obj)
-                return Response({"Done": "Created"}, status=status.HTTP_201_CREATED)
+                return Response({"Status": "Done"}, status=status.HTTP_201_CREATED)
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"Status":{"Error":serializer.errors}}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({"Error": "Can't add more than 3 comments."}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response({"Status":{"Error":serializer.errors}}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
+        
+class RateView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request, pk):
+        game_object = get_object_or_404(Game, pk=pk)
+        serializer = RateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user, game=game_object)
+            return Response({"Status":"Done"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"Status":{"Error":serializer.errors}}, status=status.HTTP_406_NOT_ACCEPTABLE)
         

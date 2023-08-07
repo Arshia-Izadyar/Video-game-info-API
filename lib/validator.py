@@ -12,5 +12,5 @@ def link_validator(link:str):
 
 
 def rate_validator(rate):
-    if rate > 10 or rate < 10:
+    if rate > 10 or rate < 0:
         raise ValidationError("rate must be 0-10s")
